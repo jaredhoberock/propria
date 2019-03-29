@@ -239,7 +239,9 @@ struct call_traits<T, void(P0, P1, PN PROPRIA_ELLIPSIS),
 
 struct impl
 {
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename Property>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == identity,
     typename call_traits<T, void(Property)>::result_type
@@ -253,7 +255,9 @@ struct impl
     return PROPRIA_MOVE_CAST(T)(t);
   }
 
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename Property>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_member,
     typename call_traits<T, void(Property)>::result_type
@@ -268,7 +272,9 @@ struct impl
         PROPRIA_MOVE_CAST(Property)(p));
   }
 
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename Property>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_free,
     typename call_traits<T, void(Property)>::result_type
@@ -284,7 +290,9 @@ struct impl
         PROPRIA_MOVE_CAST(Property)(p));
   }
 
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename P0, typename P1>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(P0, P1)>::overload == two_props,
     typename call_traits<T, void(P0, P1)>::result_type
@@ -303,7 +311,9 @@ struct impl
         PROPRIA_MOVE_CAST(P1)(p1));
   }
 
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename P0, typename P1, typename PROPRIA_ELLIPSIS PN>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(P0, P1, PN PROPRIA_ELLIPSIS)>::overload == n_props,
     typename call_traits<T, void(P0, P1, PN PROPRIA_ELLIPSIS)>::result_type

@@ -136,7 +136,9 @@ struct call_traits<T, void(Property),
 
 struct impl
 {
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename Property>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == identity,
     typename call_traits<T, void(Property)>::result_type
@@ -150,7 +152,9 @@ struct impl
     return PROPRIA_MOVE_CAST(T)(t);
   }
 
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename Property>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_member,
     typename call_traits<T, void(Property)>::result_type
@@ -165,7 +169,9 @@ struct impl
         PROPRIA_MOVE_CAST(Property)(p));
   }
 
+  PROPRIA_EXEC_CHECK_DISABLE
   template <typename T, typename Property>
+  PROPRIA_HOST_DEVICE
   PROPRIA_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_free,
     typename call_traits<T, void(Property)>::result_type
