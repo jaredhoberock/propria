@@ -293,6 +293,25 @@
 # endif // !defined(PROPRIA_DISABLE_VARIABLE_TEMPLATES)
 #endif // !defined(PROPRIA_HAS_VARIABLE_TEMPLATES)
 
+// Support CUDA __host__ __device__ on compilers known to support it
+#if !defined(PROPRIA_HAS_HOST_DEVICE)
+# if !defined(PROPRIA_DISABLE_HOST_DEVICE)
+#  if defined(__CUDACC__)
+#    define PROPRIA_HAS_HOST_DEVICE 1
+#  endif // defined(__CUDACC__)
+# endif // PROPRIA_DISABLE_HOST_DEVICE
+#endif // PROPRIA_HAS_HOST_DEVICE
+#if !defined(PROPRIA_HOST_DEVICE)
+# if defined(PROPRIA_HAS_HOST_DEVICE)
+#  define PROPRIA_HOST_DEVICE __host__ __device__
+#  define PROPRIA_EXEC_CHECK_DISABLE \
+#  pragma nv_exec_check_disable
+# else // defined(PROPRIA_HAS_HOST_DEVICE)
+#  define PROPRIA_HOST_DEVICE
+#  define PROPRIA_EXEC_CHECK_DISABLE
+# endif // defined(PROPRIA_HAS_HOST_DEVICE)
+#endif // !defined(PROPRIA_HOST_DEVICE)
+
 // Enable workarounds for lack of working expression SFINAE.
 #if !defined(PROPRIA_HAS_WORKING_EXPRESSION_SFINAE)
 # if !defined(PROPRIA_DISABLE_WORKING_EXPRESSION_SFINAE)
