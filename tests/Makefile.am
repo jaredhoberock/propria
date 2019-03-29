@@ -1,4 +1,7 @@
-AUTOMAKE_OPTIONS = subdir-objects
+# The reason dependencies is disabled is because nvcc
+# doesn't understand the -MD, etc. options related to
+# automatic dependency tracking
+AUTOMAKE_OPTIONS = subdir-objects no-dependencies
 
 check_PROGRAMS = \
 	cpp03/query_free \

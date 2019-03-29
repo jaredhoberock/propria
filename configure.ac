@@ -48,11 +48,31 @@ AC_COMPILE_IFELSE(
   [AC_MSG_RESULT([no])
     HAVE_CXX17=no;])
 
+AC_MSG_CHECKING([whether CUDA is available])
+AC_COMPILE_IFELSE(
+  [AC_LANG_PROGRAM(
+    [[#if !defined(__NVCC__)]]
+    [[#error CUDA not available]]
+    [[#endif]])],
+  [AC_MSG_RESULT([yes])
+    HAVE_CUDA=yes;],
+  [AC_MSG_RESULT([no])
+    HAVE_CUDA=no;])
+
 AM_CONDITIONAL(HAVE_CXX11,test x$HAVE_CXX11 = xyes)
 
 AM_CONDITIONAL(HAVE_CXX14,test x$HAVE_CXX14 = xyes)
 
 AM_CONDITIONAL(HAVE_CXX17,test x$HAVE_CXX17 = xyes)
+
+AM_CONDITIONAL(HAVE_CUDA,test x$HAVE_CUDA = xyes)
+
+AM_COND_IF([HAVE_CUDA],
+[
+  # tell the compiler to compile .cpp files as CUDA C++
+  CPPFLAGS="-x cu"
+])
+
 
 AC_OUTPUT([
   Makefile
